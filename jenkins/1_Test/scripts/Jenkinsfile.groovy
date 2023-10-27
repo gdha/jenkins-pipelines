@@ -1,6 +1,7 @@
 #!/usr/bin/env groovy
 
 // see https://wilsonmar.github.io/jenkins2-pipeline/ for an example
+// Another nice example: https://code.usgs.gov/ghsc/hazdev/earthquake-design-ws/-/blob/v0.8.0/Jenkinsfile.groovy
 
 import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
 import org.apache.commons.io.FileUtils
@@ -19,13 +20,35 @@ def shEx = "set -ex"
 // Paths
 
 try {
-  stage '\u2776 Stage 1'
+  stage '\u2776 Stage 1' {
   echo "\u2600 BUILD_URL=${env.BUILD_URL}"
  
   def workspace = pwd()
   echo "\u2600 workspace=${workspace}"
  
-  stage '\u2777 Stage 2'
+      ansiColor('xterm') {
+        sh """
+          mkdir -p \
+            ${WORKSPACE}/coverage \
+            ${WORKSPACE}/owasp-data \
+          ;
+
+          chmod -R 777 \
+            ${WORKSPACE}/coverage \
+            ${WORKSPACE}/owasp-data \
+          ;
+        """
+      } // ansiColor
+    } // stage 1
+
+  stage '\u2777 Stage 2' {
+    echo "\u2600 BUILD_ID=${env.BUILD_ID}"
+
+          ansiColor('xterm') {
+        sh """
+           ls -lR / ;
+        """
+  } // stage 2
 } // try end
 catch (exc) {
 /*
