@@ -3,11 +3,11 @@
 pipeline {
     agent {
         kubernetes {
-            defaultContainer 'jenkins/inbound-agent'
+            defaultContainer 'jnlp'
         }
     }
     stages {
-        stage('build') {
+        stage('1_clone') {
             steps {
                 sh 'python --version'
             }
