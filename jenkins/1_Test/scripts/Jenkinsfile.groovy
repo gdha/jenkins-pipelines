@@ -44,10 +44,11 @@ try {
   stage '\u2777 Stage 2' {
     echo "\u2600 BUILD_ID=${env.BUILD_ID}"
 
-          ansiColor('xterm') {
+      ansiColor('xterm') {
         sh """
            ls -lR / ;
         """
+      } // ansiColor
   } // stage 2
 } // try end
 catch (e) {
