@@ -19,15 +19,13 @@ def shEx = "set -ex"
 // Paths
 
 try {
-node {
-stage '\u2776 Stage 1'
-echo "\u2600 BUILD_URL=${env.BUILD_URL}"
+  stage '\u2776 Stage 1'
+  echo "\u2600 BUILD_URL=${env.BUILD_URL}"
  
-def workspace = pwd()
-echo "\u2600 workspace=${workspace}"
+  def workspace = pwd()
+  echo "\u2600 workspace=${workspace}"
  
-stage '\u2777 Stage 2'
-} // node
+  stage '\u2777 Stage 2'
 } // try end
 catch (exc) {
 /*
@@ -49,10 +47,10 @@ catch (exc) {
         notifyEveryUnstableBuild: true,
         recipients: "${email_to}",
         sendToIndividuals: true])
- }
+ } // currentBuild.result
  
  // Must re-throw exception to propagate error:
  if (err) {
      throw err
- }
-}
+ } // err
+} // finally
