@@ -50,30 +50,31 @@ try {
         """
   } // stage 2
 } // try end
-catch (exc) {
-/*
- err = caughtError
- currentBuild.result = "FAILURE"
- String recipient = 'infra@lists.jenkins-ci.org'
- mail subject: "${env.JOB_NAME} (${env.BUILD_NUMBER}) failed",
-         body: "It appears that ${env.BUILD_URL} is failing, somebody should do something about that",
-           to: recipient,
-      replyTo: recipient,
- from: 'noreply@ci.jenkins.io'
-*/
+catch (e) {
+    mail to: 'gratien.dhaese@gmail.com',
+      from: 'noreply@jenkins',
+      subject: "Jenkins Failed: ${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+      body: "Project build (${BUILD_TAG}) failed '${e}'"
+
+   FAILURE = e
+
 } finally {
-  
- (currentBuild.result != "ABORTED") {
-     // Send e-mail notifications for failed or unstable builds.
-     // currentBuild.result must be non-null for this step to work.
-     step([$class: 'Mailer',
-        notifyEveryUnstableBuild: true,
-        recipients: "${email_to}",
-        sendToIndividuals: true])
- } // currentBuild.result
+      stage('Cleanup') {
+      sh """
+        set +e;
+
+        exit 0;
+      """
+
+      if (FAILURE) {
+        currentBuild.result = 'FAILURE'
+        throw FAILURE
+      } // if
+    } //cleanup
+
  
  // Must re-throw exception to propagate error:
- if (err) {
-     throw err
+ if (e) {
+     throw e
  } // err
 } // finally
