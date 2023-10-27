@@ -16,7 +16,7 @@ def workspace = sh returnStdout: true, script: 'realpath ${WORKSPACE}/workspace'
 def yyyyMMWS = "${workspace}/${yyyyMM}"
 
 ws("${yyyyMMWS}/ws") {
-  withEnv(["shEx=${shEx}", "PATH=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/usr/bin/python:/usr/local/bin/aws") {
+  withEnv(["shEx=${shEx}", "PATH=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/usr/bin/python:/usr/local/bin/aws"]) {
     try {
       /* Stage: Init
        * Get list of all supported bundles
