@@ -40,7 +40,7 @@ catch (exc) {
 */
 } finally {
   
- (currentBuild.result != "ABORTED") && node("master") {
+ (currentBuild.result != "ABORTED") {
      // Send e-mail notifications for failed or unstable builds.
      // currentBuild.result must be non-null for this step to work.
      step([$class: 'Mailer',
