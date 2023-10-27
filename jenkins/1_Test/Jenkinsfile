@@ -7,9 +7,11 @@ pipeline {
         }
     }
     stages {
-        stage('1_clone') {
+        stage('Initiate Pipeline') {
             steps {
-                sh 'python --version'
+                script {
+                   def groovyScript = load "${env.WORKSPACE}/jenkins/1_Test/scripts/Jenkinsfile.groovy"
+                }
             }
         }
     }
